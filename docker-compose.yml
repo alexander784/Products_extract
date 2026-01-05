@@ -1,0 +1,19 @@
+version: '3.9'
+
+web:
+    build: 
+      context: ./app
+      dockerfile: ../Dockerfile
+    container_name: price_comparison_container
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./app:/app 
+
+volumes:
+  postgres_data:
+    driver: local
