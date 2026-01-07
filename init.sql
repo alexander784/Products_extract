@@ -8,9 +8,8 @@ CREATE TABLE IF NOT EXISTS products (
     product_url TEXT,
     image_url TEXT,
     scraped_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(name, source, scraped_at::date)
-);
 
-CREATE INDEX IF NOT EXISTS idx_source_category ON products(source, category);
-CREATE INDEX IF NOT EXISTS idx_price ON products(price_numeric);
-CREATE INDEX IF NOT EXISTS idx_scraped_at ON products(scraped_at);
+    scraped_date DATE GENERATED ALWAYS AS (scraped_at::date) STORED,
+
+    UNIQUE (name, source, scraped_date)
+);
